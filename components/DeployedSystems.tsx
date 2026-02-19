@@ -238,7 +238,7 @@ export function DeployedSystems() {
     const isDark = theme === "dark";
 
     return (
-        <section id="systems" className="relative py-28 overflow-hidden">
+        <section id="projects" className="relative py-28 overflow-hidden">
             {/* Aurora */}
             <div
                 className="aurora aurora-violet absolute"

@@ -48,7 +48,7 @@ export function ContactNode() {
     const isDark = theme === "dark";
 
     return (
-        <section id="node" className="relative py-28 overflow-hidden">
+        <section id="contact" className="relative py-28 overflow-hidden">
             {/* Aurora */}
             <div
                 className="aurora aurora-violet absolute"
@@ -69,9 +69,9 @@ export function ContactNode() {
                         CONTACT NODE
                     </motion.span>
                     <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold" style={{ color: "var(--text-heading)" }}>
-                        Initialize{" "}
+                        Let&apos;s Build Something{" "}
                         <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-                            Connection
+                            Intelligent Together
                         </span>
                     </motion.h2>
                     <motion.p variants={fadeUp} className="mt-4 max-w-md mx-auto" style={{ color: "var(--text-secondary)" }}>

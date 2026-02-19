@@ -122,7 +122,7 @@ export function HeroTerminal() {
     const isDark = theme === "dark";
 
     return (
-        <section className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-14">
+        <section id="home" className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-14">
             {/* Neural canvas background */}
             <div className="absolute inset-0 z-0">
                 <NeuralCanvas />
@@ -235,10 +235,10 @@ export function HeroTerminal() {
                         className="flex flex-wrap gap-4"
                     >
                         <a
-                            href="#systems"
+                            href="#projects"
                             className="group flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(124,58,237,0.4)]"
                         >
-                            View Deployed Systems
+                            View Projects
                             <ArrowDown size={16} className="transition-transform group-hover:translate-y-1" />
                         </a>
                         <a
