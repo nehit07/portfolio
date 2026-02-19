@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { fadeUp, stagger, scaleIn, VIEWPORT_ONCE } from "@/lib/animations";
+import { useTheme } from "./ThemeProvider";
 
 // ─── Domain Nodes ─────────────────────────────────────────────────────────────
 const DOMAINS = [
@@ -66,12 +67,15 @@ const PRINCIPLES = [
 ];
 
 export function ArchitectureMap() {
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
+
     return (
         <section className="relative py-28 overflow-hidden">
             {/* Aurora */}
             <div
                 className="aurora aurora-cyan absolute"
-                style={{ width: "600px", height: "400px", top: "30%", left: "50%", transform: "translate(-50%,-50%)" }}
+                style={{ width: "600px", height: "400px", top: "30%", left: "50%", transform: "translate(-50%,-50%)", opacity: isDark ? 1 : 0.4 }}
                 aria-hidden="true"
             />
 
@@ -84,16 +88,16 @@ export function ArchitectureMap() {
                     viewport={VIEWPORT_ONCE}
                     className="text-center mb-20"
                 >
-                    <motion.span variants={fadeUp} className="font-mono text-xs text-zinc-500 uppercase tracking-widest block mb-4">
+                    <motion.span variants={fadeUp} className="font-mono text-xs uppercase tracking-widest block mb-4" style={{ color: "var(--text-dim)" }}>
                         CAPABILITY ARCHITECTURE
                     </motion.span>
-                    <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-white">
+                    <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold" style={{ color: "var(--text-heading)" }}>
                         How I{" "}
                         <span className="bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">
                             Build
                         </span>
                     </motion.h2>
-                    <motion.p variants={fadeUp} className="mt-4 text-zinc-400 max-w-xl mx-auto">
+                    <motion.p variants={fadeUp} className="mt-4 max-w-xl mx-auto" style={{ color: "var(--text-secondary)" }}>
                         Five interconnected domain clusters. Each one a production capability, not a tutorial exercise.
                     </motion.p>
                 </motion.div>
@@ -137,12 +141,12 @@ export function ArchitectureMap() {
                                 />
                                 <div>
                                     <h3
-                                        className="font-semibold text-sm text-white mb-1 group-hover:text-opacity-100 transition-colors"
+                                        className="font-semibold text-sm mb-1 group-hover:text-opacity-100 transition-colors"
                                         style={{ color: d.color }}
                                     >
                                         {d.label}
                                     </h3>
-                                    <p className="font-mono text-xs text-zinc-500 leading-relaxed">{d.sub}</p>
+                                    <p className="font-mono text-xs leading-relaxed" style={{ color: "var(--text-dim)" }}>{d.sub}</p>
                                 </div>
                             </div>
                         </motion.div>
@@ -161,11 +165,12 @@ export function ArchitectureMap() {
                         <motion.div
                             key={p.title}
                             variants={fadeUp}
-                            className="glass border border-white/5 rounded-2xl p-6 group hover-card"
+                            className="glass rounded-2xl p-6 group hover-card"
+                            style={{ borderColor: "var(--border-default)" }}
                         >
                             <div className="text-3xl mb-4 text-violet-400">{p.icon}</div>
-                            <h3 className="font-bold text-white text-base mb-2">{p.title}</h3>
-                            <p className="text-zinc-400 text-sm leading-relaxed">{p.desc}</p>
+                            <h3 className="font-bold text-base mb-2" style={{ color: "var(--text-heading)" }}>{p.title}</h3>
+                            <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{p.desc}</p>
                         </motion.div>
                     ))}
                 </motion.div>

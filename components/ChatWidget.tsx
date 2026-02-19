@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, X, Send, Bot, User, Loader2, Minimize2 } from "lucide-react";
+import { useTheme } from "./ThemeProvider";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 interface Message {
@@ -42,7 +43,7 @@ function TypingDots() {
 }
 
 // ─── Chat Bubble ───────────────────────────────────────────────────────────────
-function ChatBubble({ msg }: { msg: Message }) {
+function ChatBubble({ msg, isDark }: { msg: Message; isDark: boolean }) {
     const isUser = msg.role === "user";
     return (
         <motion.div
@@ -71,13 +72,13 @@ function ChatBubble({ msg }: { msg: Message }) {
                         ? {
                             background: "rgba(124,58,237,0.18)",
                             border: "1px solid rgba(124,58,237,0.25)",
-                            color: "#e4e4e7",
+                            color: isDark ? "#e4e4e7" : "#3f3f46",
                             borderBottomRightRadius: "4px",
                         }
                         : {
-                            background: "rgba(255,255,255,0.04)",
-                            border: "1px solid rgba(255,255,255,0.07)",
-                            color: "#d4d4d8",
+                            background: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)",
+                            border: isDark ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.06)",
+                            color: isDark ? "#d4d4d8" : "#3f3f46",
                             borderBottomLeftRadius: "4px",
                         }
                 }
@@ -102,6 +103,8 @@ export function ChatWidget() {
     const [loading, setLoading] = useState(false);
     const bottomRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
 
     // Scroll to bottom on new message
     useEffect(() => {
@@ -170,31 +173,34 @@ export function ChatWidget() {
                         className="fixed bottom-24 right-5 sm:right-8 z-50 w-[min(380px,calc(100vw-2.5rem))] flex flex-col"
                         style={{
                             height: "520px",
-                            background: "rgba(10,10,22,0.92)",
+                            background: isDark ? "rgba(10,10,22,0.92)" : "rgba(255,255,255,0.95)",
                             backdropFilter: "blur(24px)",
                             WebkitBackdropFilter: "blur(24px)",
-                            border: "1px solid rgba(124,58,237,0.25)",
+                            border: isDark ? "1px solid rgba(124,58,237,0.25)" : "1px solid rgba(124,58,237,0.15)",
                             borderRadius: "20px",
-                            boxShadow: "0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,0.1), inset 0 1px 0 rgba(255,255,255,0.05)",
+                            boxShadow: isDark
+                                ? "0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,0.1), inset 0 1px 0 rgba(255,255,255,0.05)"
+                                : "0 24px 80px rgba(0,0,0,0.12), 0 0 0 1px rgba(124,58,237,0.08)",
                         }}
                     >
                         {/* Header */}
                         <div
                             className="flex items-center justify-between px-4 py-3 border-b"
-                            style={{ borderColor: "rgba(255,255,255,0.06)" }}
+                            style={{ borderColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)" }}
                         >
                             <div className="flex items-center gap-2.5">
                                 <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: "rgba(124,58,237,0.25)", border: "1px solid rgba(124,58,237,0.4)" }}>
                                     <Bot size={15} className="text-violet-400" />
                                 </div>
                                 <div>
-                                    <p className="text-sm font-semibold text-white leading-none">NV.AI</p>
+                                    <p className="text-sm font-semibold leading-none" style={{ color: "var(--text-heading)" }}>NV.AI</p>
                                     <p className="font-mono text-xs text-emerald-400 mt-0.5">Online</p>
                                 </div>
                             </div>
                             <button
                                 onClick={() => setOpen(false)}
-                                className="w-7 h-7 rounded-lg flex items-center justify-center text-zinc-500 hover:text-zinc-300 hover:bg-white/5 transition-all"
+                                className="w-7 h-7 rounded-lg flex items-center justify-center transition-all"
+                                style={{ color: "var(--text-dim)" }}
                                 aria-label="Close chat"
                             >
                                 <X size={15} />
@@ -204,14 +210,20 @@ export function ChatWidget() {
                         {/* Messages */}
                         <div className="flex-1 overflow-y-auto px-4 py-3 flex flex-col gap-3 min-h-0">
                             {messages.map((msg, i) => (
-                                <ChatBubble key={i} msg={msg} />
+                                <ChatBubble key={i} msg={msg} isDark={isDark} />
                             ))}
                             {loading && (
                                 <div className="flex gap-2.5 flex-row">
                                     <div className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center" style={{ background: "rgba(6,182,212,0.15)", border: "1px solid rgba(6,182,212,0.3)", color: "#67e8f9" }}>
                                         <Bot size={12} />
                                     </div>
-                                    <div className="rounded-2xl rounded-bl-sm px-4 py-2.5" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                                    <div
+                                        className="rounded-2xl rounded-bl-sm px-4 py-2.5"
+                                        style={{
+                                            background: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)",
+                                            border: isDark ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.06)",
+                                        }}
+                                    >
                                         <TypingDots />
                                     </div>
                                 </div>
@@ -226,8 +238,12 @@ export function ChatWidget() {
                                     <button
                                         key={s}
                                         onClick={() => send(s)}
-                                        className="font-mono text-xs px-2.5 py-1.5 rounded-lg border text-zinc-400 hover:text-zinc-200 hover:border-violet-500/40 transition-all duration-150"
-                                        style={{ background: "rgba(124,58,237,0.08)", borderColor: "rgba(124,58,237,0.2)" }}
+                                        className="font-mono text-xs px-2.5 py-1.5 rounded-lg border transition-all duration-150"
+                                        style={{
+                                            background: "rgba(124,58,237,0.08)",
+                                            borderColor: "rgba(124,58,237,0.2)",
+                                            color: "var(--text-secondary)",
+                                        }}
                                     >
                                         {s}
                                     </button>
@@ -238,7 +254,7 @@ export function ChatWidget() {
                         {/* Input */}
                         <div
                             className="flex items-center gap-2 px-3 py-3 border-t"
-                            style={{ borderColor: "rgba(255,255,255,0.06)" }}
+                            style={{ borderColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)" }}
                         >
                             <input
                                 ref={inputRef}
@@ -248,8 +264,11 @@ export function ChatWidget() {
                                 onKeyDown={handleKeyDown}
                                 placeholder="Ask about Nehit's work..."
                                 disabled={loading}
-                                className="flex-1 bg-transparent text-sm text-zinc-200 placeholder-zinc-600 outline-none"
-                                style={{ caretColor: "#7c3aed" }}
+                                className="flex-1 bg-transparent text-sm outline-none"
+                                style={{
+                                    caretColor: "#7c3aed",
+                                    color: "var(--text-primary)",
+                                }}
                                 aria-label="Chat input"
                             />
                             <button

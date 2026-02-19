@@ -7,10 +7,11 @@ import { TechMarquee } from "@/components/TechMarquee";
 import { OperationalLog } from "@/components/OperationalLog";
 import { ContactNode } from "@/components/ContactNode";
 import { ChatWidget } from "@/components/ChatWidget";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#080810] overflow-x-hidden">
+    <main className="min-h-screen overflow-x-hidden" style={{ background: "var(--bg-base)" }}>
       {/* Fixed Navigation */}
       <NavBar />
 
@@ -21,7 +22,7 @@ export default function Home() {
       <ArchitectureMap />
 
       {/* DIVIDER — Tech Marquee */}
-      <div className="border-t border-b border-white/[0.04]">
+      <div style={{ borderTop: "1px solid var(--border-default)", borderBottom: "1px solid var(--border-default)" }}>
         <TechMarquee />
       </div>
 
@@ -38,21 +39,8 @@ export default function Home() {
       <ContactNode />
 
       {/* Footer */}
-      <footer className="border-t border-white/[0.04] py-10 text-center">
-        <div className="flex flex-col items-center gap-3">
-          <span className="font-mono text-xs text-zinc-600 uppercase tracking-widest">SYSTEM STATUS</span>
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <span className="font-mono text-xs text-emerald-500">All systems operational</span>
-          </div>
-          <p className="font-mono text-xs text-zinc-700 mt-2">
-            © 2026 Nehit D. Vasavada
-          </p>
-        </div>
-      </footer>
+      <Footer />
+
       {/* Floating AI Chat Widget */}
       <ChatWidget />
     </main>

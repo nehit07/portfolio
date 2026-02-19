@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { fadeUp, stagger, VIEWPORT_ONCE } from "@/lib/animations";
-import { Github, ExternalLink } from "lucide-react";
+import { Github } from "lucide-react";
+import { useTheme } from "./ThemeProvider";
 
 // ─── Animated SVG Pipeline ─────────────────────────────────────────────────────
 function PipelineBox({ label, color = "#7c3aed" }: { label: string; color?: string }) {
@@ -134,7 +135,7 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
             whileInView={{ opacity: 1, x: 0 }}
             viewport={VIEWPORT_ONCE}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            className="glass border border-white/5 rounded-3xl p-8 md:p-10 group hover-card"
+            className="glass rounded-3xl p-8 md:p-10 group hover-card"
             style={{ borderColor: `${project.accent}20` }}
         >
             {/* Header */}
@@ -146,13 +147,14 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
                     >
                         {project.subtitle}
                     </span>
-                    <h3 className="text-2xl md:text-3xl font-bold text-white">{project.title}</h3>
+                    <h3 className="text-2xl md:text-3xl font-bold" style={{ color: "var(--text-heading)" }}>{project.title}</h3>
                 </div>
                 <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs font-mono text-zinc-500 hover:text-white transition-colors shrink-0 self-start"
+                    className="flex items-center gap-2 text-xs font-mono transition-colors shrink-0 self-start"
+                    style={{ color: "var(--text-dim)" }}
                 >
                     <Github size={14} />
                     Source
@@ -161,15 +163,15 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
 
             {/* Problem Statement */}
             <div className="mb-6 p-4 rounded-xl" style={{ background: project.accentSoft }}>
-                <span className="font-mono text-xs text-zinc-500 uppercase tracking-wider block mb-2">
+                <span className="font-mono text-xs uppercase tracking-wider block mb-2" style={{ color: "var(--text-dim)" }}>
                     Problem Framing
                 </span>
-                <p className="text-zinc-300 text-sm leading-relaxed">{project.problem}</p>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{project.problem}</p>
             </div>
 
             {/* Architecture Pipeline */}
             <div className="mb-6">
-                <span className="font-mono text-xs text-zinc-500 uppercase tracking-wider block mb-3">
+                <span className="font-mono text-xs uppercase tracking-wider block mb-3" style={{ color: "var(--text-dim)" }}>
                     System Architecture
                 </span>
                 <div className="flex flex-wrap items-center gap-2 overflow-x-auto pb-2">
@@ -186,7 +188,7 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
 
             {/* Engineering Decisions */}
             <div className="mb-6">
-                <span className="font-mono text-xs text-zinc-500 uppercase tracking-wider block mb-3">
+                <span className="font-mono text-xs uppercase tracking-wider block mb-3" style={{ color: "var(--text-dim)" }}>
                     Engineering Decisions
                 </span>
                 <motion.ul
@@ -200,7 +202,8 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
                         <motion.li
                             key={d}
                             variants={fadeUp}
-                            className="flex items-start gap-2.5 text-sm text-zinc-400"
+                            className="flex items-start gap-2.5 text-sm"
+                            style={{ color: "var(--text-secondary)" }}
                         >
                             <span className="mt-1.5 shrink-0 w-1.5 h-1.5 rounded-full" style={{ background: project.accent }} />
                             {d}
@@ -214,7 +217,12 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
                 {project.tags.map((tag) => (
                     <span
                         key={tag}
-                        className="font-mono text-xs px-2.5 py-1 rounded-md bg-zinc-900 text-zinc-400 border border-zinc-800"
+                        className="font-mono text-xs px-2.5 py-1 rounded-md"
+                        style={{
+                            background: "var(--tag-bg)",
+                            color: "var(--tag-text)",
+                            border: "1px solid var(--tag-border)",
+                        }}
                     >
                         {tag}
                     </span>
@@ -226,12 +234,15 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
 
 // ─── Deployed Systems Section ──────────────────────────────────────────────────
 export function DeployedSystems() {
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
+
     return (
         <section id="systems" className="relative py-28 overflow-hidden">
             {/* Aurora */}
             <div
                 className="aurora aurora-violet absolute"
-                style={{ width: "500px", height: "500px", top: "20%", right: "-100px" }}
+                style={{ width: "500px", height: "500px", top: "20%", right: "-100px", opacity: isDark ? 1 : 0.4 }}
                 aria-hidden="true"
             />
 
@@ -244,16 +255,16 @@ export function DeployedSystems() {
                     viewport={VIEWPORT_ONCE}
                     className="mb-16"
                 >
-                    <motion.span variants={fadeUp} className="font-mono text-xs text-zinc-500 uppercase tracking-widest block mb-4">
+                    <motion.span variants={fadeUp} className="font-mono text-xs uppercase tracking-widest block mb-4" style={{ color: "var(--text-dim)" }}>
                         DEPLOYED SYSTEMS
                     </motion.span>
-                    <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-white">
+                    <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold" style={{ color: "var(--text-heading)" }}>
                         Production{" "}
                         <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
                             Case Studies
                         </span>
                     </motion.h2>
-                    <motion.p variants={fadeUp} className="mt-4 text-zinc-400 max-w-xl">
+                    <motion.p variants={fadeUp} className="mt-4 max-w-xl" style={{ color: "var(--text-secondary)" }}>
                         Each system addresses a real-world bottleneck. Architecture-first, outcome-measured, production-ready.
                     </motion.p>
                 </motion.div>

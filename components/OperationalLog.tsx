@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { stagger, fadeUp, nodeSpring, VIEWPORT_ONCE } from "@/lib/animations";
 import { Briefcase, GraduationCap, Terminal } from "lucide-react";
+import { useTheme } from "./ThemeProvider";
 
 // ─── Log Entries ───────────────────────────────────────────────────────────────
 const LOG_ENTRIES = [
@@ -47,12 +48,15 @@ const COLOR_MAP = {
 
 // ─── Component ─────────────────────────────────────────────────────────────────
 export function OperationalLog() {
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
+
     return (
         <section id="log" className="relative py-28 overflow-hidden">
             {/* Aurora */}
             <div
                 className="aurora aurora-amber absolute"
-                style={{ width: "350px", height: "350px", top: "50%", right: "5%" }}
+                style={{ width: "350px", height: "350px", top: "50%", right: "5%", opacity: isDark ? 1 : 0.4 }}
                 aria-hidden="true"
             />
 
@@ -65,16 +69,16 @@ export function OperationalLog() {
                     viewport={VIEWPORT_ONCE}
                     className="mb-16"
                 >
-                    <motion.span variants={fadeUp} className="font-mono text-xs text-zinc-500 uppercase tracking-widest block mb-4">
+                    <motion.span variants={fadeUp} className="font-mono text-xs uppercase tracking-widest block mb-4" style={{ color: "var(--text-dim)" }}>
                         OPERATIONAL LOG
                     </motion.span>
-                    <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-white">
+                    <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold" style={{ color: "var(--text-heading)" }}>
                         System{" "}
                         <span className="bg-gradient-to-r from-amber-400 to-violet-400 bg-clip-text text-transparent">
                             Changelog
                         </span>
                     </motion.h2>
-                    <motion.p variants={fadeUp} className="mt-4 text-zinc-400">
+                    <motion.p variants={fadeUp} className="mt-4" style={{ color: "var(--text-secondary)" }}>
                         Career trajectory as version history — each entry a capability upgrade.
                     </motion.p>
                 </motion.div>
@@ -87,7 +91,12 @@ export function OperationalLog() {
                         whileInView={{ scaleY: 1 }}
                         viewport={VIEWPORT_ONCE}
                         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute left-[19px] top-2 bottom-2 w-px bg-gradient-to-b from-violet-500/60 via-cyan-500/40 to-zinc-800 origin-top"
+                        className="absolute left-[19px] top-2 bottom-2 w-px origin-top"
+                        style={{
+                            background: isDark
+                                ? "linear-gradient(to bottom, rgba(124,58,237,0.6), rgba(6,182,212,0.4), #27272a)"
+                                : "linear-gradient(to bottom, rgba(124,58,237,0.4), rgba(6,182,212,0.3), #d4d4d8)",
+                        }}
                     />
 
                     <motion.div
@@ -117,7 +126,12 @@ export function OperationalLog() {
                                     >
                                         {ICON_MAP[entry.type]}
                                         {entry.current && (
-                                            <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-500 border-2 border-[#080810] animate-pulse" />
+                                            <span
+                                                className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-500 animate-pulse"
+                                                style={{
+                                                    border: `2px solid var(--bg-base)`,
+                                                }}
+                                            />
                                         )}
                                     </motion.div>
 
@@ -128,7 +142,7 @@ export function OperationalLog() {
                                     >
                                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                                             <div>
-                                                <h3 className="font-bold text-white text-base">{entry.title}</h3>
+                                                <h3 className="font-bold text-base" style={{ color: "var(--text-heading)" }}>{entry.title}</h3>
                                                 <span className="text-sm font-medium" style={{ color: colors.accent }}>
                                                     {entry.org}
                                                 </span>
@@ -137,7 +151,7 @@ export function OperationalLog() {
                                                 {entry.timestamp}
                                             </span>
                                         </div>
-                                        <p className="text-zinc-400 text-sm leading-relaxed">{entry.mission}</p>
+                                        <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{entry.mission}</p>
                                     </div>
                                 </motion.div>
                             );

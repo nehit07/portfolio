@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeUp, stagger, VIEWPORT_ONCE } from "@/lib/animations";
+import { useTheme } from "./ThemeProvider";
 
 // ─── Skill Data ────────────────────────────────────────────────────────────────
 const CATEGORIES = [
@@ -71,14 +72,17 @@ const CATEGORIES = [
 ];
 
 // ─── Skill Bar ─────────────────────────────────────────────────────────────────
-function SkillBar({ name, level, accent }: { name: string; level: number; accent: string }) {
+function SkillBar({ name, level, accent, isDark }: { name: string; level: number; accent: string; isDark: boolean }) {
     return (
         <div className="group">
             <div className="flex justify-between items-center mb-1.5">
-                <span className="text-sm text-zinc-300 font-medium">{name}</span>
-                <span className="font-mono text-xs text-zinc-500">{level}%</span>
+                <span className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>{name}</span>
+                <span className="font-mono text-xs" style={{ color: "var(--text-dim)" }}>{level}%</span>
             </div>
-            <div className="h-1.5 bg-zinc-900 rounded-full overflow-hidden">
+            <div
+                className="h-1.5 rounded-full overflow-hidden"
+                style={{ background: isDark ? "#18181b" : "#e4e4e7" }}
+            >
                 <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: `${level}%` }}
@@ -96,13 +100,15 @@ function SkillBar({ name, level, accent }: { name: string; level: number; accent
 export function SkillMatrix() {
     const [active, setActive] = useState(CATEGORIES[0].id);
     const current = CATEGORIES.find((c) => c.id === active)!;
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
 
     return (
         <section id="stack" className="relative py-28 overflow-hidden">
             {/* Aurora */}
             <div
                 className="aurora aurora-emerald absolute"
-                style={{ width: "400px", height: "400px", bottom: "0", left: "10%" }}
+                style={{ width: "400px", height: "400px", bottom: "0", left: "10%", opacity: isDark ? 1 : 0.4 }}
                 aria-hidden="true"
             />
 
@@ -115,10 +121,10 @@ export function SkillMatrix() {
                     viewport={VIEWPORT_ONCE}
                     className="mb-12"
                 >
-                    <motion.span variants={fadeUp} className="font-mono text-xs text-zinc-500 uppercase tracking-widest block mb-4">
+                    <motion.span variants={fadeUp} className="font-mono text-xs uppercase tracking-widest block mb-4" style={{ color: "var(--text-dim)" }}>
                         TECHNICAL STACK MATRIX
                     </motion.span>
-                    <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-white">
+                    <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold" style={{ color: "var(--text-heading)" }}>
                         Capability{" "}
                         <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
                             Depth
@@ -148,8 +154,8 @@ export function SkillMatrix() {
                                     }
                                     : {
                                         background: "transparent",
-                                        borderColor: "rgba(255,255,255,0.06)",
-                                        color: "#71717a",
+                                        borderColor: "var(--border-default)",
+                                        color: "var(--text-dim)",
                                     }
                             }
                         >
@@ -166,12 +172,12 @@ export function SkillMatrix() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -8 }}
                         transition={{ duration: 0.3 }}
-                        className="glass border border-white/5 rounded-2xl p-8"
+                        className="glass rounded-2xl p-8"
                         style={{ borderColor: `${current.accent}15` }}
                     >
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5">
                             {current.skills.map((s) => (
-                                <SkillBar key={s.name} name={s.name} level={s.level} accent={current.accent} />
+                                <SkillBar key={s.name} name={s.name} level={s.level} accent={current.accent} isDark={isDark} />
                             ))}
                         </div>
                     </motion.div>

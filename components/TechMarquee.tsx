@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useTheme } from "./ThemeProvider";
 
 // ─── Tech Ticker ───────────────────────────────────────────────────────────────
 const TECH_1 = [
@@ -39,7 +40,7 @@ function MarqueeRow({ items, reverse = false, accent = "#7c3aed" }: MarqueeRowPr
                         style={{
                             background: `${accent}08`,
                             borderColor: `${accent}20`,
-                            color: "#71717a",
+                            color: "var(--text-dim)",
                         }}
                     >
                         {tech}
@@ -51,18 +52,20 @@ function MarqueeRow({ items, reverse = false, accent = "#7c3aed" }: MarqueeRowPr
 }
 
 export function TechMarquee() {
+    const { theme } = useTheme();
+
     return (
         <div className="py-8 overflow-hidden">
             <div className="relative">
-                {/* Fade edges */}
+                {/* Fade edges — use CSS variable for seamless blending */}
                 <div
                     className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
-                    style={{ background: "linear-gradient(to right, #080810, transparent)" }}
+                    style={{ background: `linear-gradient(to right, var(--bg-base), transparent)` }}
                     aria-hidden="true"
                 />
                 <div
                     className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
-                    style={{ background: "linear-gradient(to left, #080810, transparent)" }}
+                    style={{ background: `linear-gradient(to left, var(--bg-base), transparent)` }}
                     aria-hidden="true"
                 />
                 <MarqueeRow items={TECH_1} accent="#7c3aed" />

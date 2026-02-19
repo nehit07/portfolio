@@ -6,6 +6,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { stagger, fadeUp, VIEWPORT_ONCE } from "@/lib/animations";
 import { ArrowDown, Github, Linkedin } from "lucide-react";
+import { useTheme } from "./ThemeProvider";
 
 // Lazy-load the heavy canvas — no SSR
 const NeuralCanvas = dynamic(
@@ -100,7 +101,7 @@ function MetricCounter({ target, label }: { target: number | string; label: stri
     return (
         <div ref={ref} className="flex flex-col items-center gap-1 px-4">
             <span className="font-mono text-2xl font-bold text-violet-400">{count}</span>
-            <span className="text-xs text-zinc-500 text-center whitespace-nowrap">{label}</span>
+            <span className="text-xs text-center whitespace-nowrap" style={{ color: "var(--text-dim)" }}>{label}</span>
         </div>
     );
 }
@@ -117,6 +118,9 @@ const BADGES = [
 
 // ─── Main Hero Component ───────────────────────────────────────────────────────
 export function HeroTerminal() {
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
+
     return (
         <section className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-14">
             {/* Neural canvas background */}
@@ -127,12 +131,12 @@ export function HeroTerminal() {
             {/* Aurora glows */}
             <div
                 className="aurora aurora-violet absolute"
-                style={{ width: "500px", height: "500px", top: "10%", left: "55%", transform: "translate(-50%,-50%)" }}
+                style={{ width: "500px", height: "500px", top: "10%", left: "55%", transform: "translate(-50%,-50%)", opacity: isDark ? 1 : 0.5 }}
                 aria-hidden="true"
             />
             <div
                 className="aurora aurora-cyan absolute"
-                style={{ width: "300px", height: "300px", top: "70%", left: "20%", animationDelay: "3s" }}
+                style={{ width: "300px", height: "300px", top: "70%", left: "20%", animationDelay: "3s", opacity: isDark ? 1 : 0.5 }}
                 aria-hidden="true"
             />
 
@@ -150,7 +154,14 @@ export function HeroTerminal() {
                         transition={{ duration: 0.4 }}
                         className="mb-6"
                     >
-                        <span className="inline-flex items-center gap-2 font-mono text-xs text-zinc-500 bg-zinc-900/60 border border-zinc-800 rounded-md px-3 py-1.5">
+                        <span
+                            className="inline-flex items-center gap-2 font-mono text-xs rounded-md px-3 py-1.5"
+                            style={{
+                                color: "var(--text-dim)",
+                                background: isDark ? "rgba(24,24,27,0.6)" : "rgba(0,0,0,0.05)",
+                                border: isDark ? "1px solid #27272a" : "1px solid rgba(0,0,0,0.1)",
+                            }}
+                        >
                             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                             SYSTEM ONLINE — Nehit D. Vasavada — Generative AI Engineer
                         </span>
@@ -173,13 +184,13 @@ export function HeroTerminal() {
                         transition={{ delay: 0.3, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
                         className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[0.95] mb-6"
                     >
-                        <span className="text-white">Designing</span>
+                        <span style={{ color: "var(--text-heading)" }}>Designing</span>
                         <br />
                         <span className="bg-gradient-to-r from-violet-400 via-violet-300 to-cyan-400 bg-clip-text text-transparent">
                             Autonomous
                         </span>
                         <br />
-                        <span className="text-white/90">AI Systems.</span>
+                        <span style={{ color: "var(--text-heading)", opacity: 0.9 }}>AI Systems.</span>
                     </motion.h1>
 
                     {/* Description */}
@@ -187,7 +198,8 @@ export function HeroTerminal() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.45, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                        className="text-zinc-400 text-base md:text-lg max-w-xl leading-relaxed mb-8"
+                        className="text-base md:text-lg max-w-xl leading-relaxed mb-8"
+                        style={{ color: "var(--text-secondary)" }}
                     >
                         I architect and deploy AI pipelines — from multi-agent orchestration with{" "}
                         <span className="text-violet-400 font-medium">LangGraph</span> to production{" "}
@@ -207,7 +219,8 @@ export function HeroTerminal() {
                             <motion.span
                                 key={b.label}
                                 variants={fadeUp}
-                                className={`${b.color} font-mono text-xs px-3 py-1.5 rounded-full text-zinc-300`}
+                                className={`${b.color} font-mono text-xs px-3 py-1.5 rounded-full`}
+                                style={{ color: "var(--text-secondary)" }}
                             >
                                 {b.label}
                             </motion.span>
@@ -232,7 +245,8 @@ export function HeroTerminal() {
                             href="https://github.com/nehit07"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 glass border px-6 py-3 rounded-xl font-semibold text-sm text-zinc-300 hover:text-white hover:border-zinc-500 transition-all duration-200"
+                            className="flex items-center gap-2 glass border px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
+                            style={{ color: "var(--text-secondary)" }}
                         >
                             <Github size={16} />
                             GitHub
@@ -241,7 +255,8 @@ export function HeroTerminal() {
                             href="https://www.linkedin.com/in/nehitvasavada/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 glass border px-6 py-3 rounded-xl font-semibold text-sm text-zinc-300 hover:text-white hover:border-zinc-500 transition-all duration-200"
+                            className="flex items-center gap-2 glass border px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
+                            style={{ color: "var(--text-secondary)" }}
                         >
                             <Linkedin size={16} />
                             LinkedIn
@@ -292,7 +307,8 @@ export function HeroTerminal() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.85, duration: 0.5 }}
-                    className="glass border border-white/5 rounded-2xl py-6 px-4 flex flex-wrap justify-center gap-2 divide-x divide-white/5"
+                    className="glass rounded-2xl py-6 px-4 flex flex-wrap justify-center gap-2"
+                    style={{ borderColor: "var(--border-default)" }}
                 >
                     {METRICS.map((m) => (
                         <MetricCounter key={m.label} target={m.value} label={m.label} />
@@ -307,7 +323,7 @@ export function HeroTerminal() {
                 transition={{ delay: 1.5, duration: 0.5 }}
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
             >
-                <span className="font-mono text-xs text-zinc-600 uppercase tracking-widest">scroll</span>
+                <span className="font-mono text-xs uppercase tracking-widest" style={{ color: "var(--text-dim)" }}>scroll</span>
                 <div className="w-px h-8 bg-gradient-to-b from-zinc-600 to-transparent animate-pulse" />
             </motion.div>
         </section>

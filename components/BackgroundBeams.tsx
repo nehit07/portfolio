@@ -2,9 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
+import { useTheme } from "./ThemeProvider";
 
 export const BackgroundBeams = ({ className }: { className?: string }) => {
     const beamsRef = useRef<HTMLCanvasElement>(null);
+    const { theme } = useTheme();
 
     useEffect(() => {
         const canvas = beamsRef.current;
@@ -12,6 +14,7 @@ export const BackgroundBeams = ({ className }: { className?: string }) => {
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
+        const isDark = theme === "dark";
         let animationFrameId: number;
         let particles: { x: number; y: number; speed: number; opacity: number; size: number }[] = [];
 
@@ -23,13 +26,13 @@ export const BackgroundBeams = ({ className }: { className?: string }) => {
 
         const initParticles = () => {
             particles = [];
-            const particleCount = 40; // Reduced count for subtlety
+            const particleCount = 40;
             for (let i = 0; i < particleCount; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     speed: 0.2 + Math.random() * 0.5,
-                    opacity: Math.random() * 0.5,
+                    opacity: Math.random() * (isDark ? 0.5 : 0.25),
                     size: Math.random() * 2,
                 });
             }
@@ -40,7 +43,11 @@ export const BackgroundBeams = ({ className }: { className?: string }) => {
 
             // Draw particles (stars)
             particles.forEach((p) => {
-                ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+                if (isDark) {
+                    ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+                } else {
+                    ctx.fillStyle = `rgba(124, 58, 237, ${p.opacity * 0.5})`;
+                }
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -64,7 +71,7 @@ export const BackgroundBeams = ({ className }: { className?: string }) => {
             window.removeEventListener("resize", resize);
             cancelAnimationFrame(animationFrameId);
         };
-    }, []);
+    }, [theme]);
 
     return (
         <div
@@ -73,8 +80,15 @@ export const BackgroundBeams = ({ className }: { className?: string }) => {
                 className
             )}
         >
-            {/* Deep Gradient Background */}
-            <div className="absolute inset-0 bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))]" />
+            {/* Deep Gradient Background — adapts to theme */}
+            <div
+                className="absolute inset-0"
+                style={{
+                    background: theme === "dark"
+                        ? "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(120,119,198,0.15), rgba(255,255,255,0))"
+                        : "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(120,119,198,0.08), rgba(255,255,255,0))",
+                }}
+            />
 
             {/* Canvas for Particles */}
             <canvas ref={beamsRef} className="absolute inset-0 w-full h-full opacity-40" />

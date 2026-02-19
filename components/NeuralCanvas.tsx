@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTheme } from "./ThemeProvider";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 interface Particle {
@@ -23,12 +24,15 @@ export function NeuralCanvas() {
     const mouseRef = useRef({ x: -9999, y: -9999 });
     const particlesRef = useRef<Particle[]>([]);
     const rafRef = useRef<number>(0);
+    const { theme } = useTheme();
 
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
+
+        const isDark = theme === "dark";
 
         // Resize handler
         const resize = () => {
@@ -58,8 +62,10 @@ export function NeuralCanvas() {
             opacity: Math.random() * 0.5 + 0.2,
         }));
 
+        // Colors adapt to theme
         const VIOLET_R = 139, VIOLET_G = 92, VIOLET_B = 246;
         const CYAN_R = 6, CYAN_G = 182, CYAN_B = 212;
+        const opacityMultiplier = isDark ? 1 : 0.45;
 
         const draw = () => {
             const w = canvas.width;
@@ -97,7 +103,7 @@ export function NeuralCanvas() {
                 // Draw node
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${VIOLET_R}, ${VIOLET_G}, ${VIOLET_B}, ${p.opacity})`;
+                ctx.fillStyle = `rgba(${VIOLET_R}, ${VIOLET_G}, ${VIOLET_B}, ${p.opacity * opacityMultiplier})`;
                 ctx.fill();
             }
 
@@ -110,7 +116,7 @@ export function NeuralCanvas() {
                     const dy = a.y - b.y;
                     const d = Math.sqrt(dx * dx + dy * dy);
                     if (d < CONNECTION_DISTANCE) {
-                        const alpha = (1 - d / CONNECTION_DISTANCE) * 0.25;
+                        const alpha = (1 - d / CONNECTION_DISTANCE) * 0.25 * opacityMultiplier;
                         // Interpolate violet<->cyan based on position
                         const ratio = (a.x + b.x) / 2 / w;
                         const r = Math.round(VIOLET_R + (CYAN_R - VIOLET_R) * ratio);
@@ -136,7 +142,7 @@ export function NeuralCanvas() {
             resizeObs.disconnect();
             canvas.removeEventListener("mousemove", onMouseMove);
         };
-    }, []);
+    }, [theme]);
 
     return (
         <canvas
