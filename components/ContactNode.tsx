@@ -36,7 +36,7 @@ const CONTACT_LINKS = [
 ];
 
 const AVAILABLE_FOR = [
-    "Senior AI / ML Engineering Roles",
+    "Entry Level AI / ML Engineering Roles",
     "Agentic Systems Consulting",
     "Research Collaboration",
     "LangGraph / RAG Architecture Review",
