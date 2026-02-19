@@ -152,7 +152,7 @@ export function HeroTerminal() {
                     >
                         <span className="inline-flex items-center gap-2 font-mono text-xs text-zinc-500 bg-zinc-900/60 border border-zinc-800 rounded-md px-3 py-1.5">
                             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                            SYSTEM ONLINE — Nehit D. Vasavada — AI Systems Engineer
+                            SYSTEM ONLINE — Nehit D. Vasavada — Generative AI Engineer
                         </span>
                     </motion.div>
 
