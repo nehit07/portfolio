@@ -49,7 +49,7 @@ export default function Home() {
             <span className="font-mono text-xs text-emerald-500">All systems operational</span>
           </div>
           <p className="font-mono text-xs text-zinc-700 mt-2">
-            © 2026 Nehit D. Vasavada · Next.js · TypeScript · Framer Motion
+            © 2026 Nehit D. Vasavada
           </p>
         </div>
       </footer>
