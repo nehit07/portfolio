@@ -139,142 +139,155 @@ export function HeroTerminal() {
             {/* Dot grid */}
             <div className="absolute inset-0 bg-grid opacity-60 z-0" aria-hidden="true" />
 
-            {/* Content */}
-            <div className="relative z-10 max-w-5xl mx-auto px-6 py-24">
-                {/* Avatar */}
-                <motion.div
-                    initial={{ opacity: 0, y: -12, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                    className="mb-6"
-                >
-                    {/* Ring wrapper: padding creates the gradient border, inner div clips the image */}
-                    <div
-                        className="rounded-full p-[2.5px] w-fit"
-                        style={{
-                            background: "conic-gradient(from 220deg, #7c3aed, #06b6d4, #10b981, #7c3aed)",
-                            boxShadow: "0 0 28px rgba(124,58,237,0.6), 0 0 10px rgba(6,182,212,0.25)",
-                        }}
+            {/* Content — split layout */}
+            <div className="relative z-10 max-w-6xl mx-auto px-6 py-24 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+                {/* LEFT — Text content */}
+                <div className="flex-1 w-full">
+                    {/* Terminal label */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="mb-6"
                     >
-                        <div className="rounded-full overflow-hidden bg-[#080810]" style={{ width: 92, height: 92 }}>
-                            <Image
-                                src="/avatar.png"
-                                alt="Nehit Vasavada — AI Systems Engineer"
-                                width={92}
-                                height={92}
-                                className="rounded-full object-cover w-full h-full"
-                                priority
-                            />
-                        </div>
+                        <span className="inline-flex items-center gap-2 font-mono text-xs text-zinc-500 bg-zinc-900/60 border border-zinc-800 rounded-md px-3 py-1.5">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                            SYSTEM ONLINE — Nehit D. Vasavada — AI Systems Engineer
+                        </span>
+                    </motion.div>
+
+                    {/* Typewriter */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.2, duration: 0.4 }}
+                        className="mb-6 h-6"
+                    >
+                        <Typewriter />
+                    </motion.div>
+
+                    {/* Main heading */}
+                    <motion.h1
+                        initial={{ opacity: 0, y: 28 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                        className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[0.95] mb-6"
+                    >
+                        <span className="text-white">Designing</span>
+                        <br />
+                        <span className="bg-gradient-to-r from-violet-400 via-violet-300 to-cyan-400 bg-clip-text text-transparent">
+                            Autonomous
+                        </span>
+                        <br />
+                        <span className="text-white/90">AI Systems.</span>
+                    </motion.h1>
+
+                    {/* Description */}
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.45, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                        className="text-zinc-400 text-base md:text-lg max-w-xl leading-relaxed mb-8"
+                    >
+                        I architect and deploy AI pipelines — from multi-agent orchestration with{" "}
+                        <span className="text-violet-400 font-medium">LangGraph</span> to production{" "}
+                        <span className="text-cyan-400 font-medium">RAG systems</span> and{" "}
+                        <span className="text-emerald-400 font-medium">transformer-based NLP</span>.
+                        Research-backed. Production-ready.
+                    </motion.p>
+
+                    {/* Badges */}
+                    <motion.div
+                        variants={stagger}
+                        initial="hidden"
+                        animate="visible"
+                        className="flex flex-wrap gap-2 mb-10"
+                    >
+                        {BADGES.map((b) => (
+                            <motion.span
+                                key={b.label}
+                                variants={fadeUp}
+                                className={`${b.color} font-mono text-xs px-3 py-1.5 rounded-full text-zinc-300`}
+                            >
+                                {b.label}
+                            </motion.span>
+                        ))}
+                    </motion.div>
+
+                    {/* CTAs */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.7, duration: 0.5 }}
+                        className="flex flex-wrap gap-4"
+                    >
+                        <a
+                            href="#systems"
+                            className="group flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(124,58,237,0.4)]"
+                        >
+                            View Deployed Systems
+                            <ArrowDown size={16} className="transition-transform group-hover:translate-y-1" />
+                        </a>
+                        <a
+                            href="https://github.com/nehit07"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 glass border px-6 py-3 rounded-xl font-semibold text-sm text-zinc-300 hover:text-white hover:border-zinc-500 transition-all duration-200"
+                        >
+                            <Github size={16} />
+                            GitHub
+                        </a>
+                        <a
+                            href="https://www.linkedin.com/in/nehitvasavada/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 glass border px-6 py-3 rounded-xl font-semibold text-sm text-zinc-300 hover:text-white hover:border-zinc-500 transition-all duration-200"
+                        >
+                            <Linkedin size={16} />
+                            LinkedIn
+                        </a>
+                    </motion.div>
+                </div>
+
+                {/* RIGHT — Avatar */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                    className="shrink-0 flex items-center justify-center"
+                >
+                    <div
+                        className="relative"
+                        style={{ animation: "hero-float 6s ease-in-out infinite" }}
+                    >
+                        {/* Ambient glow behind the image */}
+                        <div
+                            className="absolute inset-0 rounded-full"
+                            style={{
+                                background: "radial-gradient(circle, rgba(124,58,237,0.35) 0%, rgba(6,182,212,0.12) 50%, transparent 70%)",
+                                filter: "blur(40px)",
+                                transform: "scale(1.5)",
+                            }}
+                            aria-hidden="true"
+                        />
+                        {/* Image */}
+                        <Image
+                            src="/avatar.png"
+                            alt="Nehit Vasavada — AI Systems Engineer"
+                            width={280}
+                            height={280}
+                            className="relative rounded-full object-cover w-[200px] h-[200px] md:w-[240px] md:h-[240px] lg:w-[280px] lg:h-[280px]"
+                            style={{
+                                filter: "drop-shadow(0 0 40px rgba(124,58,237,0.4)) drop-shadow(0 0 16px rgba(6,182,212,0.15))",
+                            }}
+                            priority
+                        />
                     </div>
                 </motion.div>
+            </div>
 
-                {/* Terminal label */}
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1, duration: 0.4 }}
-                    className="mb-6"
-                >
-                    <span className="inline-flex items-center gap-2 font-mono text-xs text-zinc-500 bg-zinc-900/60 border border-zinc-800 rounded-md px-3 py-1.5">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                        SYSTEM ONLINE — Nehit D. Vasavada — AI Systems Engineer
-                    </span>
-                </motion.div>
-
-                {/* Typewriter */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.4 }}
-                    className="mb-6 h-6"
-                >
-                    <Typewriter />
-                </motion.div>
-
-                {/* Main heading */}
-                <motion.h1
-                    initial={{ opacity: 0, y: 28 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                    className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[0.95] mb-6"
-                >
-                    <span className="text-white">Designing</span>
-                    <br />
-                    <span className="bg-gradient-to-r from-violet-400 via-violet-300 to-cyan-400 bg-clip-text text-transparent">
-                        Autonomous
-                    </span>
-                    <br />
-                    <span className="text-white/90">AI Systems.</span>
-                </motion.h1>
-
-                {/* Description */}
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.45, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                    className="text-zinc-400 text-base md:text-lg max-w-xl leading-relaxed mb-8"
-                >
-                    I architect and deploy AI pipelines — from multi-agent orchestration with{" "}
-                    <span className="text-violet-400 font-medium">LangGraph</span> to production{" "}
-                    <span className="text-cyan-400 font-medium">RAG systems</span> and{" "}
-                    <span className="text-emerald-400 font-medium">transformer-based NLP</span>.
-                    Research-backed. Production-ready.
-                </motion.p>
-
-                {/* Badges */}
-                <motion.div
-                    variants={stagger}
-                    initial="hidden"
-                    animate="visible"
-                    className="flex flex-wrap gap-2 mb-10"
-                >
-                    {BADGES.map((b) => (
-                        <motion.span
-                            key={b.label}
-                            variants={fadeUp}
-                            className={`${b.color} font-mono text-xs px-3 py-1.5 rounded-full text-zinc-300`}
-                        >
-                            {b.label}
-                        </motion.span>
-                    ))}
-                </motion.div>
-
-                {/* CTAs */}
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7, duration: 0.5 }}
-                    className="flex flex-wrap gap-4 mb-16"
-                >
-                    <a
-                        href="#systems"
-                        className="group flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:shadow-[0_0_24px_rgba(124,58,237,0.4)]"
-                    >
-                        View Deployed Systems
-                        <ArrowDown size={16} className="transition-transform group-hover:translate-y-1" />
-                    </a>
-                    <a
-                        href="https://github.com/nehit07"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 glass border px-6 py-3 rounded-xl font-semibold text-sm text-zinc-300 hover:text-white hover:border-zinc-500 transition-all duration-200"
-                    >
-                        <Github size={16} />
-                        GitHub
-                    </a>
-                    <a
-                        href="https://www.linkedin.com/in/nehitvasavada/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 glass border px-6 py-3 rounded-xl font-semibold text-sm text-zinc-300 hover:text-white hover:border-zinc-500 transition-all duration-200"
-                    >
-                        <Linkedin size={16} />
-                        LinkedIn
-                    </a>
-                </motion.div>
-
-                {/* System Metrics */}
+            {/* System Metrics — stays full width below */}
+            <div className="relative z-10 max-w-5xl mx-auto px-6 pb-24">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

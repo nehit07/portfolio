@@ -145,6 +145,19 @@
     }
   }
 
+  /* Hero avatar float — gentler bob */
+  @keyframes hero-float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
   /* Timeline draw */
   --animate-draw-line: draw-line 0.8s var(--ease-out-expo) forwards;
 
