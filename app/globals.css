@@ -1,20 +1,419 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKEN SYSTEM — Autonomous Intelligence Dashboard
+   ============================================================ */
+@theme {
+  /* --- Font Families --- */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), 'Courier New', monospace;
+
+  /* --- Colors --- */
+  --color-base: #080810;
+  --color-surface: #0d0d1a;
+  --color-surface-raised: #12121f;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-active: rgba(139, 92, 246, 0.4);
+
+  --color-violet: #7c3aed;
+  --color-violet-soft: #a78bfa;
+  --color-violet-glow: rgba(124, 58, 237, 0.3);
+  --color-cyan: #06b6d4;
+  --color-cyan-soft: #67e8f9;
+  --color-cyan-glow: rgba(6, 182, 212, 0.25);
+  --color-emerald: #10b981;
+  --color-emerald-soft: #6ee7b7;
+  --color-emerald-glow: rgba(16, 185, 129, 0.25);
+  --color-amber: #f59e0b;
+
+  --color-text-primary: #f4f4f5;
+  --color-text-secondary: #a1a1aa;
+  --color-text-dim: #52525b;
+  --color-text-mono: #4ade80;
+
+  /* --- Animation Timings --- */
+  --duration-micro: 150ms;
+  --duration-component: 300ms;
+  --duration-section: 600ms;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ========== KEYFRAMES ========== */
+
+  /* Scan beam (computer vision project) */
+  --animate-scan: scan 2.5s linear infinite;
+
+  @keyframes scan {
+    0% {
+      top: 0%
+    }
+
+    100% {
+      top: 100%
+    }
+  }
+
+  /* Marquee */
+  --animate-marquee: marquee var(--duration) linear infinite;
+  --animate-marquee-reverse: marquee-reverse var(--duration) linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0)
+    }
+
+    to {
+      transform: translateX(-50%)
+    }
+  }
+
+  @keyframes marquee-reverse {
+    from {
+      transform: translateX(-50%)
+    }
+
+    to {
+      transform: translateX(0)
+    }
+  }
+
+  /* Pulse dot (status indicator) */
+  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+
+  @keyframes pulse-dot {
+
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.5;
+      transform: scale(0.85);
+    }
+  }
+
+  /* Border breath (contact section) */
+  --animate-breath: breath 3s ease-in-out infinite;
+
+  @keyframes breath {
+
+    0%,
+    100% {
+      border-color: rgba(124, 58, 237, 0.2);
+    }
+
+    50% {
+      border-color: rgba(124, 58, 237, 0.6);
+    }
+  }
+
+  /* Flow dash (pipeline animations) */
+  --animate-flow: flow 2s linear infinite;
+
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -20;
+    }
+  }
+
+  /* Shimmer sweep */
+  --animate-shimmer: shimmer 2.5s linear infinite;
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* Float */
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-16px);
+    }
+  }
+
+  /* Timeline draw */
+  --animate-draw-line: draw-line 0.8s var(--ease-out-expo) forwards;
+
+  @keyframes draw-line {
+    from {
+      transform: scaleY(0);
+    }
+
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  /* Typewriter cursor blink */
+  --animate-blink: blink 1s step-end infinite;
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* Aurora pulse */
+  --animate-aurora: aurora 8s ease-in-out infinite alternate;
+
+  @keyframes aurora {
+    0% {
+      opacity: 0.12;
+      transform: scale(1) translate(0, 0);
+    }
+
+    100% {
+      opacity: 0.22;
+      transform: scale(1.15) translate(2%, 3%);
+    }
+  }
+
+  /* Count-up fade */
+  --animate-count-up: count-up 0.4s var(--ease-out-expo) forwards;
+
+  @keyframes count-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Node entrance */
+  --animate-node-in: node-in 0.4s var(--ease-out-expo) forwards;
+
+  @keyframes node-in {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/* ============================================================
+   BASE RESET & TYPOGRAPHY
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-feature-settings: "rlig" 1, "calt" 1;
+  background: #080810;
+  color: #f4f4f5;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* Selection */
+::selection {
+  background: rgba(124, 58, 237, 0.35);
+  color: #f4f4f5;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080810;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.4);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, 0.7);
+}
+
+/* ============================================================
+   BACKGROUND SYSTEM
+   ============================================================ */
+
+/* Dot grid pattern */
+.bg-grid {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Noise grain overlay */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+
+/* Aurora glow (per-section color variation) */
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: aurora 8s ease-in-out infinite alternate;
+}
+
+.aurora-violet {
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.35) 0%, transparent 70%);
+}
+
+.aurora-cyan {
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.3) 0%, transparent 70%);
+}
+
+.aurora-emerald {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, transparent 70%);
+}
+
+.aurora-amber {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 70%);
+}
+
+/* ============================================================
+   GLASSMORPHISM SURFACES
+   ============================================================ */
+
+.glass {
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-violet {
+  background: rgba(124, 58, 237, 0.06);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.glass-cyan {
+  background: rgba(6, 182, 212, 0.05);
+  border: 1px solid rgba(6, 182, 212, 0.18);
+}
+
+.glass-emerald {
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.18);
+}
+
+/* ============================================================
+   INTERACTIVE UTILITIES
+   ============================================================ */
+
+.hover-card {
+  transition: transform 300ms var(--ease-out-expo),
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(124, 58, 237, 0.4);
+  box-shadow: 0 16px 48px rgba(124, 58, 237, 0.12), 0 0 0 1px rgba(124, 58, 237, 0.15);
+}
+
+/* Shimmer on skill nodes */
+.shimmer {
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.06) 50%,
+      rgba(255, 255, 255, 0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* Glow text variants */
+.glow-violet {
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+}
+
+.glow-cyan {
+  text-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+}
+
+.glow-emerald {
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+}
+
+/* ============================================================
+   MONOSPACE / TERMINAL UTILITIES
+   ============================================================ */
+.font-mono {
+  font-family: var(--font-jetbrains-mono), 'Courier New', monospace;
+}
+
+.terminal-text {
+  color: #4ade80;
+  font-family: var(--font-jetbrains-mono), monospace;
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* ============================================================
+   REDUCED MOTION SUPPORT
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
