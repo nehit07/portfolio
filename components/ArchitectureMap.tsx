@@ -71,7 +71,7 @@ export function ArchitectureMap() {
     const isDark = theme === "dark";
 
     return (
-        <section id="about" className="relative py-28 overflow-hidden">
+        <section id="capabilities" className="relative py-28 overflow-hidden">
             {/* Aurora */}
             <div
                 className="aurora aurora-cyan absolute"

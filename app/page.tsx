@@ -1,5 +1,6 @@
 import { NavBar } from "@/components/NavBar";
 import { HeroTerminal } from "@/components/HeroTerminal";
+import { AboutSection } from "@/components/AboutSection";
 import { ArchitectureMap } from "@/components/ArchitectureMap";
 import { DeployedSystems } from "@/components/DeployedSystems";
 import { SkillMatrix } from "@/components/SkillMatrix";
@@ -18,7 +19,10 @@ export default function Home() {
       {/* SECTION 1 — Hero Terminal */}
       <HeroTerminal />
 
-      {/* SECTION 2 — Architecture Map / Capabilities */}
+      {/* SECTION 2 — About */}
+      <AboutSection />
+
+      {/* SECTION 3 — Architecture Map / Capabilities */}
       <ArchitectureMap />
 
       {/* DIVIDER — Tech Marquee */}

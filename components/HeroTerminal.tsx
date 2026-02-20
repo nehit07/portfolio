@@ -201,11 +201,11 @@ export function HeroTerminal() {
                         className="text-base md:text-lg max-w-xl leading-relaxed mb-8"
                         style={{ color: "var(--text-secondary)" }}
                     >
-                        I architect and deploy AI pipelines — from multi-agent orchestration with{" "}
+                        I architect AI systems end-to-end — from multi-agent orchestration with{" "}
                         <span className="text-violet-400 font-medium">LangGraph</span> to production{" "}
-                        <span className="text-cyan-400 font-medium">RAG systems</span> and{" "}
+                        <span className="text-cyan-400 font-medium">RAG pipelines</span> and{" "}
                         <span className="text-emerald-400 font-medium">transformer-based NLP</span>.
-                        Research-backed. Production-ready.
+                        Research-informed. Deployment-proven.
                     </motion.p>
 
                     {/* Badges */}
