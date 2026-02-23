@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { fadeUp, stagger, VIEWPORT_ONCE } from "@/lib/animations";
-import { Github } from "lucide-react";
+import { Github, ExternalLink, Construction } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 // ─── Animated SVG Pipeline ─────────────────────────────────────────────────────
@@ -70,6 +70,7 @@ const PROJECTS = [
         ],
         tags: ["LangGraph", "LangChain", "Tavily API", "Python", "Next.js"],
         github: "https://github.com/nehit07/blog_generator",
+        liveUrl: "https://blog-generator-9r8p.onrender.com/",
         accent: "#7c3aed",
         accentSoft: "rgba(124,58,237,0.12)",
     },
@@ -95,6 +96,7 @@ const PROJECTS = [
         ],
         tags: ["TensorFlow", "CNN", "FastAPI", "React", "Python"],
         github: "https://github.com/nehit07/FloraVision-AI",
+        liveUrl: "https://floravision-ai.streamlit.app/",
         accent: "#10b981",
         accentSoft: "rgba(16,185,129,0.1)",
     },
@@ -120,6 +122,7 @@ const PROJECTS = [
         ],
         tags: ["Django", "LangChain", "Groq", "PostgreSQL", "Next.js", "WeasyPrint"],
         github: "#",
+        status: "developing" as const,
         accent: "#06b6d4",
         accentSoft: "rgba(6,182,212,0.1)",
     },
@@ -149,16 +152,48 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
                     </span>
                     <h3 className="text-2xl md:text-3xl font-bold" style={{ color: "var(--text-heading)" }}>{project.title}</h3>
                 </div>
-                <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs font-mono transition-colors shrink-0 self-start"
-                    style={{ color: "var(--text-dim)" }}
-                >
-                    <Github size={14} />
-                    Source
-                </a>
+                <div className="flex items-center gap-3 shrink-0 self-start">
+                    {(project as any).liveUrl && (
+                        <a
+                            href={(project as any).liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-xs font-mono px-3 py-1.5 rounded-lg border transition-all duration-300 hover:scale-105"
+                            style={{
+                                color: project.accent,
+                                borderColor: `${project.accent}40`,
+                                background: `${project.accent}12`,
+                            }}
+                        >
+                            <ExternalLink size={13} />
+                            Live Demo
+                        </a>
+                    )}
+                    {(project as any).status === "developing" && (
+                        <span
+                            className="flex items-center gap-2 text-xs font-mono px-3 py-1.5 rounded-lg border"
+                            style={{
+                                color: "#f59e0b",
+                                borderColor: "rgba(245,158,11,0.3)",
+                                background: "rgba(245,158,11,0.08)",
+                                animation: "pulse 2.5s ease-in-out infinite",
+                            }}
+                        >
+                            <Construction size={13} />
+                            In Development
+                        </span>
+                    )}
+                    <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-xs font-mono transition-colors shrink-0"
+                        style={{ color: "var(--text-dim)" }}
+                    >
+                        <Github size={14} />
+                        Source
+                    </a>
+                </div>
             </div>
 
             {/* Problem Statement */}
