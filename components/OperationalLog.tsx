@@ -2,31 +2,40 @@
 
 import { motion } from "framer-motion";
 import { stagger, fadeUp, nodeSpring, VIEWPORT_ONCE } from "@/lib/animations";
-import { Briefcase, GraduationCap, Terminal } from "lucide-react";
+import { GraduationCap, Terminal, Radar } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 // ─── Log Entries ───────────────────────────────────────────────────────────────
 const LOG_ENTRIES = [
     {
-        timestamp: "2025-09 → PRESENT",
-        title: "Software Developer Intern",
-        org: "WeServe Codes",
+        timestamp: "2026 → PRESENT",
+        title: "Open to Full-Time Opportunities",
+        org: "Generative AI / Agentic AI Engineer",
         mission:
-            "Architecting agentic AI workflows using LangGraph for automated content and data processing pipelines. Building Django REST backends with PostgreSQL, implementing caching layers, and subscription-gated feature systems.",
-        type: "work",
+            "B.Tech complete, internship complete — actively interviewing for full-time Generative AI and Agentic AI engineering roles. Open to research collaborations and architecture reviews in the meantime.",
+        type: "status",
         current: true,
     },
     {
-        timestamp: "2023 → PRESENT",
+        timestamp: "2025-09 → 2026-02",
+        title: "Software Developer Intern",
+        org: "WeServe Codes",
+        mission:
+            "Architected agentic AI workflows using LangGraph for automated content and data processing pipelines. Built Django REST backends with PostgreSQL, implemented caching layers, and shipped subscription-gated feature systems.",
+        type: "work",
+        current: false,
+    },
+    {
+        timestamp: "2023 → 2026",
         title: "B.Tech — Computer Engineering",
         org: "Charotar University of Science & Technology",
         mission:
-            "CGPA: 8.31 / 10. Core coursework: Machine Learning, Database Systems, Operating Systems, Computer Networks. Independent research focus: Transformer architectures and retrieval-augmented generation.",
+            "CGPA: 8.53 / 10. Core coursework: Machine Learning, Database Systems, Operating Systems, Computer Networks. Independent research culminated in a co-authored paper on AI-driven image deconvolution, published at ICTCS 2024 (Springer).",
         type: "education",
         current: false,
     },
     {
-        timestamp: "2023",
+        timestamp: "2020 → 2023",
         title: "Diploma — Computer Engineering",
         org: "Dr. Subhash Technical Campus",
         mission:
@@ -37,11 +46,13 @@ const LOG_ENTRIES = [
 ];
 
 const ICON_MAP: Record<string, React.ReactNode> = {
+    status: <Radar size={13} />,
     work: <Terminal size={13} />,
     education: <GraduationCap size={13} />,
 };
 
 const COLOR_MAP = {
+    status: { accent: "#10b981", bg: "rgba(16,185,129,0.1)", border: "rgba(16,185,129,0.3)" },
     work: { accent: "#7c3aed", bg: "rgba(124,58,237,0.1)", border: "rgba(124,58,237,0.3)" },
     education: { accent: "#06b6d4", bg: "rgba(6,182,212,0.08)", border: "rgba(6,182,212,0.25)" },
 };

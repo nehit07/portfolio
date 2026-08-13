@@ -6,6 +6,7 @@ import { DeployedSystems } from "@/components/DeployedSystems";
 import { SkillMatrix } from "@/components/SkillMatrix";
 import { TechMarquee } from "@/components/TechMarquee";
 import { OperationalLog } from "@/components/OperationalLog";
+import { PublicationsSection } from "@/components/PublicationsSection";
 import { ContactNode } from "@/components/ContactNode";
 import { ChatWidget } from "@/components/ChatWidget";
 import { Footer } from "@/components/Footer";
@@ -38,6 +39,9 @@ export default function Home() {
 
       {/* SECTION 5 — Operational Log (Experience) */}
       <OperationalLog />
+
+      {/* SECTION 5.5 — Publications & Certifications */}
+      <PublicationsSection />
 
       {/* SECTION 6 — Contact Node */}
       <ContactNode />

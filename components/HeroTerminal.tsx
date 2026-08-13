@@ -61,10 +61,10 @@ function Typewriter() {
 
 // ─── System Metrics ────────────────────────────────────────────────────────────
 const METRICS = [
-    { label: "Systems Deployed", value: 4 },
-    { label: "AI Pipelines Built", value: 8 },
-    { label: "Agent Architectures", value: 3 },
-    { label: "Research Papers Studied", value: "50+" },
+    { label: "Projects Shipped", value: 5 },
+    { label: "Live Deployments", value: 2 },
+    { label: "Research Paper Published", value: 1 },
+    { label: "Certifications Earned", value: 3 },
 ];
 
 function MetricCounter({ target, label }: { target: number | string; label: string }) {

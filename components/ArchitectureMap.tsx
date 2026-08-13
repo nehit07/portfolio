@@ -17,7 +17,7 @@ const DOMAINS = [
     {
         id: "rag",
         label: "RAG Pipelines",
-        sub: "FAISS · ChromaDB · Retrieval Augmented",
+        sub: "Weaviate · Citation-Level Retrieval · RAG",
         color: "#06b6d4",
         glow: "rgba(6,182,212,0.35)",
         pos: { top: "42%", left: "12%" },

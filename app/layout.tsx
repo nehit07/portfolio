@@ -18,7 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Nehit Vasavada — Generative AI Engineer",
   description:
-    "Designing and deploying autonomous AI systems — LangGraph orchestration, RAG pipelines, agentic workflows, and production NLP. Senior AI/ML engineer portfolio.",
+    "Designing and deploying autonomous AI systems — LangGraph orchestration, RAG pipelines, agentic workflows, and production NLP. Portfolio of a B.Tech Computer Engineering graduate open to full-time Generative AI / Agentic AI roles.",
   keywords: [
     "AI Engineer",
     "Generative AI",

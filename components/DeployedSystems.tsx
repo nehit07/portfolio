@@ -6,6 +6,15 @@ import { Github, ExternalLink, Construction } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 // ─── Animated SVG Pipeline ─────────────────────────────────────────────────────
+const NODE_TEXT_TINT: Record<string, string> = {
+    "#7c3aed": "#c4b5fd",
+    "#a78bfa": "#ddd6fe",
+    "#06b6d4": "#67e8f9",
+    "#10b981": "#6ee7b7",
+    "#f59e0b": "#fcd34d",
+    "#ec4899": "#f9a8d4",
+};
+
 function PipelineBox({ label, color = "#7c3aed" }: { label: string; color?: string }) {
     return (
         <div
@@ -13,7 +22,7 @@ function PipelineBox({ label, color = "#7c3aed" }: { label: string; color?: stri
             style={{
                 borderColor: `${color}50`,
                 background: `${color}12`,
-                color: color === "#10b981" ? "#6ee7b7" : color === "#06b6d4" ? "#67e8f9" : "#c4b5fd",
+                color: NODE_TEXT_TINT[color] ?? "#c4b5fd",
             }}
         >
             {label}
@@ -51,7 +60,7 @@ const PROJECTS = [
         title: "AI Blog Generator",
         subtitle: "Agentic Multi-Agent System",
         problem:
-            "Manual content pipelines break at scale. Human writers can't research, plan, write, and edit simultaneously at production volume. This system replaces that bottleneck with an orchestrated multi-agent graph.",
+            "Manual content pipelines break at scale. Human writers can't research, plan, write, and edit simultaneously at production volume. This system replaces that bottleneck with an orchestrated multi-agent graph, shipped as a full Django web app with a user dashboard.",
         architecture: [
             { label: "User Query", color: "#7c3aed" },
             { label: "Orchestrator", color: "#7c3aed" },
@@ -66,9 +75,9 @@ const PROJECTS = [
             "LangGraph for stateful orchestration — enables conditional edges and parallel agent branches",
             "Tavily over SerpAPI — real-time web grounding eliminates hallucination in the research phase",
             "Shared state dict across nodes — avoids redundant API calls between agent handoffs",
-            "Modular agents — each node independently deployable as a microservice",
+            "Django + PostgreSQL delivery — full save/edit/delete dashboard, not just a script or notebook",
         ],
-        tags: ["LangGraph", "LangChain", "Tavily API", "Python", "Next.js"],
+        tags: ["LangGraph", "LangChain", "Tavily API", "Django", "PostgreSQL", "Python"],
         github: "https://github.com/nehit07/blog_generator",
         liveUrl: "https://blog-generator-9r8p.onrender.com/",
         accent: "#7c3aed",
@@ -77,28 +86,80 @@ const PROJECTS = [
     {
         id: "flora",
         title: "FloraVision AI",
-        subtitle: "Computer Vision Classification System",
+        subtitle: "Agentic Computer-Vision Diagnosis System",
         problem:
-            "Agricultural disease identification requires expert pathologists — a resource unavailable to small-scale farmers. This system deploys a CNN classification pipeline achieving 95% accuracy on leaf disease detection, democratizing plant health diagnostics.",
+            "Agricultural disease identification requires expert pathologists — a resource unavailable to small-scale farmers. FloraVision closes that gap by pairing YOLOv8 symptom detection with an 8-node LangGraph reasoning pipeline that turns raw detections into a grounded, safety-checked care plan.",
         architecture: [
-            { label: "Image Upload", color: "#10b981" },
-            { label: "Preprocessing", color: "#10b981" },
-            { label: "CNN Backbone", color: "#06b6d4" },
-            { label: "Feature Extractor", color: "#06b6d4" },
-            { label: "Classification Head", color: "#7c3aed" },
-            { label: "Disease + Confidence", color: "#f59e0b" },
+            { label: "Image Input", color: "#10b981" },
+            { label: "YOLOv8 Detection", color: "#10b981" },
+            { label: "Plant ID Node", color: "#06b6d4" },
+            { label: "Symptom Mapping", color: "#06b6d4" },
+            { label: "Severity (Rule-Based)", color: "#a78bfa" },
+            { label: "Cause Analysis (LLM)", color: "#7c3aed" },
+            { label: "Safety Filter", color: "#f59e0b" },
+            { label: "Diagnosis Report", color: "#f59e0b" },
         ],
         decisions: [
-            "Transfer learning on EfficientNet — solves cold-start on limited agricultural dataset",
-            "Augmentation pipeline (rotation, flip, color jitter) — cuts overfitting by ~18%",
-            "FastAPI async backend — enables concurrent image processing without blocking",
-            "Base64 encoding for browser upload compatibility — removes native file system dependency",
+            "YOLOv8 for symptom detection — flags yellowing, spots, wilting, and pests with confidence scores before any LLM reasoning runs",
+            "Rule-based severity classification before the LLM handoff — deterministic Critical/Moderate/Mild/Healthy grading keeps diagnosis auditable",
+            "8-node LangGraph pipeline — plant ID, symptom mapping, cause analysis, seasonal context, and care planning as independently testable nodes",
+            "Dedicated safety-filter node — screens every recommendation to prefer organic, low-risk treatments before it reaches the user",
         ],
-        tags: ["TensorFlow", "CNN", "FastAPI", "React", "Python"],
+        tags: ["YOLOv8", "LangGraph", "Computer Vision", "Streamlit", "Python"],
         github: "https://github.com/nehit07/FloraVision-AI",
         liveUrl: "https://floravision-ai.streamlit.app/",
         accent: "#10b981",
         accentSoft: "rgba(16,185,129,0.1)",
+    },
+    {
+        id: "research-qa",
+        title: "Research Paper Q&A System",
+        subtitle: "RAG Chatbot for Academic PDFs",
+        problem:
+            "Digging through dense academic PDFs for one specific claim is slow, and generic chatbots hallucinate citations. This system lets a user query research papers in plain language and get answers grounded in the source text — down to the exact page.",
+        architecture: [
+            { label: "PDF Upload", color: "#a78bfa" },
+            { label: "Chunking", color: "#a78bfa" },
+            { label: "Embedding", color: "#06b6d4" },
+            { label: "Weaviate Store", color: "#06b6d4" },
+            { label: "Retriever", color: "#7c3aed" },
+            { label: "Answer + Citation", color: "#f59e0b" },
+        ],
+        decisions: [
+            "Weaviate as the vector store — hybrid search and metadata filtering support page-level citation tracking",
+            "Chunking tuned for citation precision — smaller, overlapping chunks trade some context for exact page-number attribution",
+            "LangChain retrieval chain — keeps retrieval and generation swappable as models change",
+            "Streamlit interface — fast to iterate on for a research-tool UX without building a full frontend",
+        ],
+        tags: ["LangChain", "RAG", "Weaviate", "Streamlit", "Python"],
+        github: "https://github.com/nehit07/Chatbot_multipdf",
+        accent: "#a78bfa",
+        accentSoft: "rgba(167,139,250,0.12)",
+    },
+    {
+        id: "ner-system",
+        title: "Named Entity Recognition System",
+        subtitle: "Transformer-Based NLP Pipeline",
+        problem:
+            "Off-the-shelf NER models miss domain-specific entities and can't adapt without a full retrain cycle. This system pairs spaCy and BERT-based models with a Flask layer that supports adding new entity types and retraining for domain adaptation.",
+        architecture: [
+            { label: "Text Input", color: "#f59e0b" },
+            { label: "spaCy Preprocessing", color: "#f59e0b" },
+            { label: "BERT / Transformer", color: "#7c3aed" },
+            { label: "Entity Extraction", color: "#06b6d4" },
+            { label: "Flask API", color: "#10b981" },
+            { label: "Tagged Output", color: "#10b981" },
+        ],
+        decisions: [
+            "spaCy + BERT pairing — spaCy handles fast preprocessing, BERT-based models handle ambiguous and multi-word entities",
+            "Flask backend — lightweight serving layer for entity-extraction requests",
+            "Dynamic entity addition — new entity types register without rebuilding the whole pipeline",
+            "Domain-adaptation retraining — the model fine-tunes on new domain text as labeled data grows",
+        ],
+        tags: ["Transformers", "spaCy", "BERT", "NLP", "Flask", "Python"],
+        github: "https://github.com/nehit07/NER-Named-Entity-Recognition-",
+        accent: "#f59e0b",
+        accentSoft: "rgba(245,158,11,0.1)",
     },
     {
         id: "resumify",

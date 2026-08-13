@@ -9,14 +9,14 @@ import { Briefcase, GraduationCap, MapPin } from "lucide-react";
 const SNAPSHOT = [
     {
         icon: <Briefcase size={15} />,
-        label: "Current Role",
-        value: "Software Developer Intern - WeServe Codes",
+        label: "Status",
+        value: "Open to Full-Time Roles",
         accent: "#7c3aed",
     },
     {
         icon: <GraduationCap size={15} />,
         label: "Education",
-        value: "B.Tech Computer Engineering - CHARUSAT (CGPA 8.31)",
+        value: "B.Tech Computer Engineering - CHARUSAT (CGPA 8.53)",
         accent: "#06b6d4",
     },
     {
@@ -96,8 +96,9 @@ export function AboutSection() {
                                 an architecture diagram - boundaries, contracts, and data flows defined before the first line of code.
                             </p>
                             <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                                Currently pursuing my B.Tech in Computer Engineering while interning as a Software Developer,
-                                I&apos;m actively seeking <span className="font-medium" style={{ color: "var(--text-heading)" }}>entry-level AI/ML engineering roles</span> where
+                                Having completed my B.Tech in Computer Engineering and a Software Developer internship at
+                                WeServe Codes — where I shipped production LangGraph pipelines — I&apos;m now actively seeking{" "}
+                                <span className="font-medium" style={{ color: "var(--text-heading)" }}>full-time Generative AI / Agentic AI Engineer roles</span> where
                                 I can bring production-grade thinking to real-world AI systems.
                             </p>
                         </motion.div>
@@ -174,7 +175,7 @@ export function AboutSection() {
                                 </span>
                             </div>
                             <p className="text-xs mt-2" style={{ color: "var(--text-dim)" }}>
-                                Seeking entry-level AI/ML engineering roles &amp; research collaborations
+                                Seeking full-time Generative AI / Agentic AI engineering roles &amp; research collaborations
                             </p>
                         </motion.div>
                     </motion.div>

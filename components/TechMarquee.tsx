@@ -5,15 +5,15 @@ import { useTheme } from "./ThemeProvider";
 
 // ─── Tech Ticker ───────────────────────────────────────────────────────────────
 const TECH_1 = [
-    "LangGraph", "LangChain", "RAG Pipelines", "FAISS", "ChromaDB",
+    "LangGraph", "LangChain", "RAG Pipelines", "Weaviate", "YOLOv8",
     "Agentic Systems", "OpenAI GPT-4", "Groq", "Ollama",
-    "Django REST", "FastAPI", "PostgreSQL", "Python", "TypeScript",
+    "Django REST", "FastAPI", "Flask", "PostgreSQL", "Python",
 ];
 
 const TECH_2 = [
-    "TensorFlow", "BERT Fine-tuning", "Transfer Learning",
+    "TensorFlow", "PyTorch", "BERT Fine-tuning", "spaCy / NLTK",
     "Prompt Engineering", "Vector Databases", "Multi-Agent Orchestration",
-    "Next.js", "Transformers HF", "CNN Architectures", "LLM Optimization",
+    "Docker", "Transformers HF", "CNN / GAN", "Published Researcher",
 ];
 
 interface MarqueeRowProps {
